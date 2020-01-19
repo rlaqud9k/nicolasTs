@@ -1,0 +1,13 @@
+{
+  "name": "nicolasts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "kim",
+  "license": "mit",
+  "scripts": {
+    "start":"node index.js",
+    "prestart": "tsc"
+  }
+
+}
+
