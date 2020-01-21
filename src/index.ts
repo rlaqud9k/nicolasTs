@@ -14,6 +14,14 @@ class Block {
     timestamp: number
  ): string => CryptoJS.SHA256(index + previousHash + timestamp + data).toString();
 
+ static validateStructure = (validateBlock : Block):boolean =>
+        typeof validateBlock.index === "number" &&
+        typeof validateBlock.timestamp === "number" &&
+        typeof validateBlock.data === "string" &&
+        typeof validateBlock.previousHash === "string" &&
+        typeof validateBlock.hash === "string"
+    
+    
 
  constructor(index: number,
              hash: string,
@@ -48,11 +56,9 @@ const getLatestBlock = (): Block => blockChain[blockChain.length - 1];
 
 const getNewTimeStamp = (): number => Math.round(new Date().getTime() / 1000);
 
-const previousBlock: Block = getLatestBlock();
-
-const newIndex: number = previousBlock.index + 1;
-
 const createNewBlock = (data: string): Block =>{
+    const previousBlock: Block = getLatestBlock();
+    const newIndex: number = previousBlock.index + 1;
     const NewTimeStamp:number = getNewTimeStamp();
     const newHash: string = Block.calculateBlockHash(
         newIndex,
@@ -71,6 +77,16 @@ const createNewBlock = (data: string): Block =>{
         return NewBlock;
 };
 
-console.log(createNewBlock('병관'), createNewBlock('부자'));
+const isBlockVaild = (candidateBlock : Block, previousBlock: Block):boolean => {
+    if(!Block.validateStructure(candidateBlock)){
+        return false;
+    }else if(previousBlock.index + 1 !== candidateBlock.index){
+        return false;
+    }else if(previousBlock.hash !== candidateBlock.previousHash){
+        return false;
+    }
+}
+
+console.log(createNewBlock('부자'));
 
 export{};
