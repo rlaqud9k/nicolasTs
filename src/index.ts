@@ -34,7 +34,7 @@ class Block {
                  this.timestamp = timestamp;
                  this.index = index;
  }
- 
+
 // static calculateBlockHash(index: number,
 //     hash: string,
 //     previousHash: string,
@@ -46,6 +46,7 @@ class Block {
  // 오직 public static private 접근제어자만 선언가능
  
 }
+
 const genesisBlock: Block = new Block(0, "200202020202020", "", "Hello", 123456);
 
 let blockChain : Block[] = [genesisBlock];
@@ -74,6 +75,7 @@ const createNewBlock = (data: string): Block =>{
         data,
         NewTimeStamp
     );
+        plusBlock(NewBlock, previousBlock);
         return NewBlock;
 };
 
@@ -84,9 +86,20 @@ const isBlockVaild = (candidateBlock : Block, previousBlock: Block):boolean => {
         return false;
     }else if(previousBlock.hash !== candidateBlock.previousHash){
         return false;
+    }else{
+        return true;
     }
 }
 
-console.log(createNewBlock('부자'));
+const plusBlock = (aBlock : Block, bBlock : Block) : void =>{
+    if(isBlockVaild(aBlock, getLatestBlock())){
+        blockChain.push(aBlock);
+    }
+}
 
+createNewBlock('병관');
+createNewBlock('프리');
+createNewBlock('되게 해주세요');
+createNewBlock('에러?');
+console.log(blockChain);
 export{};

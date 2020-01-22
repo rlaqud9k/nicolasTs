@@ -27,6 +27,7 @@ const createNewBlock = (data) => {
     const NewTimeStamp = getNewTimeStamp();
     const newHash = Block.calculateBlockHash(newIndex, previousBlock.hash, data, NewTimeStamp);
     const NewBlock = new Block(newIndex, newHash, previousBlock.hash, data, NewTimeStamp);
+    plusBlock(NewBlock, previousBlock);
     return NewBlock;
 };
 const isBlockVaild = (candidateBlock, previousBlock) => {
@@ -39,6 +40,18 @@ const isBlockVaild = (candidateBlock, previousBlock) => {
     else if (previousBlock.hash !== candidateBlock.previousHash) {
         return false;
     }
+    else {
+        return true;
+    }
 };
-console.log(createNewBlock('부자'));
+const plusBlock = (aBlock, bBlock) => {
+    if (isBlockVaild(aBlock, getLatestBlock())) {
+        blockChain.push(aBlock);
+    }
+};
+createNewBlock('병관');
+createNewBlock('프리');
+createNewBlock('되게 해주세요');
+createNewBlock('에러?');
+console.log(blockChain);
 //# sourceMappingURL=index.js.map
